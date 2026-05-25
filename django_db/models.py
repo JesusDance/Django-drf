@@ -1,13 +1,12 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from phone_field import PhoneField
-
 
 SELECT_GENRE = [("1", "rpg"), ("2", "shooter"), ("3", "strategy"),]
 
 
 class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # username = models.CharField(max_length=64, unique=True, null=True)
     phone = PhoneField(blank=True, help_text="Please enter your phone number")
     # email = models.EmailField(unique=True, max_length=64, null=True)
@@ -20,6 +19,7 @@ class Client(models.Model):
 
 
 class Game(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     genre = models.CharField(max_length=64,
                              blank=True,
@@ -38,8 +38,3 @@ class GameList(models.Model):
 
     def __str__(self):
         return f"{self.id}_{self.gamer.username}"
-
-
-
-
-
