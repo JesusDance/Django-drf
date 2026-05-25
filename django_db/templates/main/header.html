@@ -1,0 +1,14 @@
+<h1 class="m-0">Content from header</h1>
+<div class="d-flex gap-2">
+    {% if user.is_authenticated %}
+    <form action="{% url 'logout' %} " method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger fw-bold">Logout</button>
+    </form>
+    {% elif request.path != '/login/' %}
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary fw-bold">Login</button>
+    </form>
+    {% endif %}
+</div>

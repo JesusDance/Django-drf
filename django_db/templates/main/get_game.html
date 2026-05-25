@@ -1,0 +1,28 @@
+{% extends "main/index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="table-responsive">
+    <table class="table table-dark table-hover table-bordered align-middle shadow">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">genre</th>
+            <th scope="col">description</th>
+            <th scope="col">wikipage</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ game.id }}</td>
+                <td>{{ game.name }}</td>
+                <td>{{ game.get_genre_display }}</td>
+                <td>{{ game.description }}</td>
+                <td><a href="{{ game.wiki_page }}">wiki</a></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

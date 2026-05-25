@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "main/index.html" %}
+
 {% block content %}
-<h2>Sing up Form</h2>
+<h2>Login</h2>
     <form method="POST">
         {% csrf_token %}
         {% for field in form %}
@@ -17,7 +12,7 @@
                 <div class="help-text">
                     {{ field.help_text }}
                 </div>
-                {% endif %}
+            {% endif %}
             {% if field.errors %}
                 <div class="form-error">
                     {{ field.errors }}
@@ -25,8 +20,8 @@
             {% endif %}
             </div>
         {% endfor %}
-        <button type="submit">Submit form</button>
+        <div class="text-center mb-3">
+            <button type="submit" class="btn btn-primary fw-bold">Login</button>
+        </div>
     </form>
 {% endblock %}
-</body>
-</html>
