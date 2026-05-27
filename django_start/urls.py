@@ -16,9 +16,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Django-start API",
+        default_version='v1',
+        description="Project for managing games and his owners by using API "
+                    "and standard django CRUDs",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="jiesusdance@gmail.com"),
+        license=openapi.License(name="JesusProject")
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny]
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/docs/',
+         schema_view.with_ui(cache_timeout=0), name='schema-swagger'),
     path('', include('django_db.urls')),
     path('', include('django_api.urls')),
     path('', include('drf_jwt.urls')),
