@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -21,7 +21,7 @@ class SignUpView(FormView):
     def form_valid(self, form: UserForm) -> HttpResponse:
         user = form.save()
 
-        #authenticate() зайвий(зайвий запит в бд і перевірка pass_hash)/створення юзера нового
+        # authenticate() зайвий(зайвий запит в бд і перевірка pass_hash)/створення юзера нового
         # user = authenticate(username=form.cleaned_data["username"],
         #                     password=form.cleaned_data["password1"])
 
@@ -38,12 +38,14 @@ def client_view(request):
 
     if form.is_valid():
         client = form.save(commit=False)
-        client.user = request.user #без цього кожен в сесії бачив список юзерів
+        client.user = request.user  # без цього кожен в сесії бачив список юзерів
         client.save()
         messages.success(request, "User profile created successfully")
         return redirect("game-view")
 
-    return render(request, template_name="registration/sign_up.html", context={"form": form})
+    return render(
+        request, template_name="registration/sign_up.html", context={"form": form}
+    )
 
 
 class UserLogin(LoginView):
@@ -90,11 +92,10 @@ class GameView(LoginRequiredMixin, FormView):
     template_name = "main/games.html"
     success_url = "/client/game/"
 
-
     def form_valid(self, form: GameForm) -> HttpResponse:
         # commit=False створює object у пам’яті, але НЕ save в DB
         game = form.save(commit=False)
-        game.user = self.request.user  #для того щоб вручну не вибирати зі списку users
+        game.user = self.request.user  # для того щоб вручну не вибирати зі списку users
         game.save()
         messages.success(self.request, "Game created successfully")
         return super().form_valid(form)
@@ -147,7 +148,7 @@ class GameDelete(LoginRequiredMixin, DeleteView):
         return super().form_valid(form)
 
 
-#@login_required
+# @login_required
 # def get_game(request, game_id):
 #     game = Game.objects.get(pk=game_id, user=request.user)
 #     return render(request, template_name="get_game.html", context={"game": game})

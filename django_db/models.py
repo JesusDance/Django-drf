@@ -2,7 +2,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from phone_field import PhoneField
 
-SELECT_GENRE = [("1", "rpg"), ("2", "shooter"), ("3", "strategy"),]
+SELECT_GENRE = [
+    ("1", "rpg"),
+    ("2", "shooter"),
+    ("3", "strategy"),
+]
 
 
 class Client(models.Model):
@@ -21,10 +25,12 @@ class Client(models.Model):
 class Game(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
-    genre = models.CharField(max_length=64,
-                             blank=True,
-                             choices=SELECT_GENRE,
-                             help_text="Please select genre of game")
+    genre = models.CharField(
+        max_length=64,
+        blank=True,
+        choices=SELECT_GENRE,
+        help_text="Please select genre of game",
+    )
     description = models.TextField(max_length=200, blank=True)
     wiki_page = models.URLField(default="https://wikipedia.com", blank=True)
 

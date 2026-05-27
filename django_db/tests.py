@@ -1,7 +1,6 @@
 from http import HTTPStatus
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from django.test import TestCase, Client
 
 from .models import Game
@@ -10,15 +9,13 @@ from .models import Game
 class PrivateModelTests(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = get_user_model().objects.create_user(username="Steve",
-                                                         password="test_pass12345",
-                                                         email="test@gmail.com")
+        self.user = get_user_model().objects.create_user(
+            username="Steve", password="test_pass12345", email="test@gmail.com"
+        )
         self.client.force_login(self.user)
 
-        Game.objects.create(name="cs-go", description="some_old_game",
-                            user=self.user)
-        Game.objects.create(name="cs-go2", description="some_old_game2",
-                            user=self.user)
+        Game.objects.create(name="cs-go", description="some_old_game", user=self.user)
+        Game.objects.create(name="cs-go2", description="some_old_game2", user=self.user)
 
     def test_retrieve_model(self):
         response = self.client.get("/get-gamelist/")
@@ -61,16 +58,20 @@ class PrivateModelTests(TestCase):
 
 class PublicTest(TestCase):
     def setUp(self):
-        self.client = Client() # клієнт без логіну (анонімний користувач)
+        self.client = Client()  # клієнт без логіну (анонімний користувач)
 
     def test_signup(self):
-        payload = {"username": "test_user",
-                   "password1": "test_pass123", #UserCreationForm має такі поля
-                   "password2": "test_pass123", #UserCreationForm має такі поля
-                   "email": "test@gmail.com"}
+        payload = {
+            "username": "test_user",
+            "password1": "test_pass123",  # UserCreationForm має такі поля
+            "password2": "test_pass123",  # UserCreationForm має такі поля
+            "email": "test@gmail.com",
+        }
 
-        response = self.client.post("/", payload) # робимо запит
-        exists_user = User.objects.filter(username=payload["username"]).exists()
+        response = self.client.post("/", payload)  # робимо запит
+        exists_user = (
+            get_user_model().objects.filter(username=payload["username"]).exists()
+        )
 
         # FOUND тому що success_url redirect -> accounts/profile/
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
@@ -83,5 +84,6 @@ class PublicTest(TestCase):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertFalse(response.context["form"].is_valid())
-        self.assertFormError(response.context["form"], "username",
-                             "This field is required.")
+        self.assertFormError(
+            response.context["form"], "username", "This field is required."
+        )

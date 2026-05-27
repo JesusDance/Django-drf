@@ -16,15 +16,10 @@ class ClientForm(ModelForm):
         model = Client
         fields = "__all__"
         exclude = ["user"]
-        widgets = {'birthday': DateInput(attrs={'type': 'date'})}
+        widgets = {"birthday": DateInput(attrs={"type": "date"})}
 
 
 class GameForm(ModelForm):
     class Meta:
         model = Game
         fields = ["name", "genre", "description", "wiki_page"]
-
-
-
-
-
