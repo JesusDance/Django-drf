@@ -1,14 +1,14 @@
 from rest_framework import viewsets
-from rest_framework.generics import CreateAPIView
 from rest_framework.authentication import authenticate
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.status import HTTP_200_OK
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import CreateAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK
 
-from django_db.models import Game, GameList
-from .serializers import UserSerializer, GameModelSerializer, GameListSerializer
+from django_db.models import Game
+from .serializers import UserSerializer, GameModelSerializer
 
 
 class CreateUser(CreateAPIView):
@@ -23,6 +23,9 @@ def user_login(request):
         username = request.data.get("username")
         password = request.data.get("password")
 
+        if username is None or password is None:
+            return Response({"error": "Invalid username or password!"})
+
         user = authenticate(request, username=username, password=password)
         if user is None:
             return Response({"error": "Invalid username or password!"})
@@ -34,17 +37,10 @@ def user_login(request):
 class GameViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = GameModelSerializer
-    queryset = Game.objects.all()
-
-
-class GameListViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = GameListSerializer
 
     def get_queryset(self):
-        queryset = GameList.objects.filter(gamer=self.request.user)
-        return queryset
+        return Game.objects.filter(user=self.request.user).order_by("-id")
 
-
-
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
