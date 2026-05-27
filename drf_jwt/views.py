@@ -1,8 +1,21 @@
-from rest_framework.views import APIView, Response
-from rest_framework.permissions import IsAuthenticated
+"""
+JWT authentication app.
 
-from .serializers import UserRegisterSerializer, GameListSerializer
+This app contains authentication-related endpoints:
+- user registration
+- JWT token issuing
+- token refresh flow
+
+Business logic is intentionally minimal.
+Core domain logic lives in django_api / django_db.
+"""
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView, Response
+
 from django_db.models import GameList
+from .serializers import UserRegisterSerializer, GameListSerializer
+
 
 class UserRegisterView(APIView):
 
@@ -23,7 +36,6 @@ class ProfileView(APIView):
         data = {
             "username": request.user.username,
             "email": request.user.email,
-            "games": serializer.data
+            "games": serializer.data,
         }
         return Response(data)
-

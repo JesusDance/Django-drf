@@ -1,7 +1,8 @@
-from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
-from django_db.models import GameList, Game
 from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
+
+from django_db.models import GameList, Game
 
 
 class UserRegisterSerializer(ModelSerializer):
@@ -18,14 +19,13 @@ class UserRegisterSerializer(ModelSerializer):
 class GameModelSerializer(ModelSerializer):
     class Meta:
         model = Game
-        fields = "__all__"
+        fields = ["id", "name", "genre", "description", "wiki_page"]
 
 
 class GameListSerializer(ModelSerializer):
-    gamer = serializers.CharField(source='gamer.username', read_only=True)
+    gamer = serializers.CharField(source="gamer.username", read_only=True)
     game_list = GameModelSerializer(many=True, read_only=True)
 
     class Meta:
         model = GameList
         fields = "__all__"
-
