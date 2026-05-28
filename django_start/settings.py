@@ -38,7 +38,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = False
 LOGIN_URL = "login"
 
-ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "django-drf.onrender.com"]
 
 SECURE_HSTS_SECONDS = 60
 
