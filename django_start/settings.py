@@ -38,7 +38,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = False
 LOGIN_URL = "login"
 
-ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "django-drf.onrender.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "django-drf-1k5v.onrender.com"]
 
 SECURE_HSTS_SECONDS = 60
 
@@ -47,7 +47,7 @@ SECURE_HSTS_PRELOAD = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
 
 # Application definition
 
