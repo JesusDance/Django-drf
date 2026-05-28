@@ -137,7 +137,7 @@ WSGI_APPLICATION = 'django_start.wsgi.application'
 # }  using for load_dotenv()
 
 DATABASES = {
-    'default': env.db()
+    'default': env.db(default="sqlite:///db.sqlite3")
 }
 
 # Password validation
