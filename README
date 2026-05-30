@@ -8,6 +8,7 @@ and drf plus the app using jwt token.
 
 ##Features
 - create, update, delete users profile and their games too
+- authentication
 - unittests
 - PostgreSQL
 
@@ -22,8 +23,10 @@ and drf plus the app using jwt token.
 - Bootstrap
 - Unittests
 - Docker (Dockerfile, Docker compose)
-- black (for PIP8)
+- Black (for PIP8)
 - .env file
+- Deploy using Render https://django-drf-1k5v.onrender.com
+- Neon database for cloud host
 
 
 ##Instalation
