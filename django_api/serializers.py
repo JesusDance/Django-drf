@@ -29,8 +29,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class GameModelSerializer(serializers.ModelSerializer):
-    genre = serializers.CharField(source="get_genre_display")
+    genre_display = serializers.CharField(source="get_genre_display", read_only=True)
 
     class Meta:
         model = Game
-        fields = ["id", "name", "genre", "description", "wiki_page"]
+        fields = ["id", "name", "genre", "genre_display", "description", "wiki_page"]
