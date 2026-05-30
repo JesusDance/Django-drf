@@ -10,7 +10,7 @@ Business logic is intentionally minimal.
 Core domain logic lives in django_api / django_db.
 """
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView, Response
 
 from django_db.models import GameList
@@ -18,6 +18,7 @@ from .serializers import UserRegisterSerializer, GameListSerializer
 
 
 class UserRegisterView(APIView):
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
