@@ -9,6 +9,6 @@ router.register(r"games", GameViewSet, "games")
 urlpatterns = [
     path("", include((router.urls, "rest_api"), namespace="rest_api")),
     path("create-user/", CreateUser.as_view(), name="create-user"),
-    path("login/", user_login, name="login"),
+    path("api-login/", user_login, name="api-login"),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
