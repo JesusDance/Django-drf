@@ -1,19 +1,19 @@
-#Djngo-drf
+# Djngo-drf
 
 
-##Description
+## Description
 An app with complex integration with standard forms
 and drf plus the app using jwt token.
 
 
-##Features
+## Features
 - create, update, delete users profile and their games too
 - authentication
 - unittests
 - PostgreSQL
 
 
-##TechStack
+## TechStack
 - Django
 - Django DRF
 - PyJWT
@@ -29,7 +29,7 @@ and drf plus the app using jwt token.
 - Neon database for cloud host
 
 
-##Instalation
+## Instalation
 1. Clone repo
 git clone https://github.com/JesusDance/Django-drf
 cd Django_drf/django_start
@@ -52,12 +52,12 @@ App runs at
 http://127.0.0.1:8000
 
 
-#Endpoints
+# Endpoints
 
-##OpenAPI swagger
+## OpenAPI swagger
 http://127.0.0.1:8000/api/docs/
 
-##django_db
+## django_db
 http://127.0.0.1:8000/admin/ POST (superuser)
 http://127.0.0.1:8000/ POST (create user)
 http://127.0.0.1:8000/login/ POST
@@ -72,13 +72,13 @@ http://127.0.0.1:8000/get-gamelist/ GET
 http://127.0.0.1:8000/game-update/<int:game_id>/ PATCH
 http://127.0.0.1:8000/game-delete/<int:game_id>/ DELETE
 
-##django_api
+## django_api
 http://127.0.0.1:8000/create-user/ POST (create-user)
 http://127.0.0.1:8000/games/ GET, POST
 http://127.0.0.1:8000/games/<int:game_id>/ POST, GET, PUT, PATCH, DELETE
 http://127.0.0.1:8000/api-auth/login/ POST
 
-##drf_jwt
+## drf_jwt
 http://127.0.0.1:8000/register/ POST
 http://127.0.0.1:8000/register/profile/ GET
 http://127.0.0.1:8000/api/auth/login/ POST
