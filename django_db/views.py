@@ -34,7 +34,7 @@ class SignUpView(FormView):
 
 @login_required
 def client_view(request):
-    form = ClientForm(request.POST or None)
+    form = ClientForm(request.POST or None, request.FILES or None)
 
     if form.is_valid():
         client = form.save(commit=False)
