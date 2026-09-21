@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import FormView, ListView, DetailView, DeleteView, \
@@ -98,6 +99,8 @@ class GameView(LoginRequiredMixin, FormView):
         game.user = self.request.user  # для того щоб вручну не вибирати зі списку users
         game.save()
         messages.success(self.request, "Game created successfully")
+        key = f"games:user:{self.request.user.pk}"
+        cache.delete(key)
         return super().form_valid(form)
 
 
@@ -106,7 +109,14 @@ class GetGameList(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Game.objects.filter(user=self.request.user).order_by("-id")
+        key = f"games:user:{self.request.user.pk}"
+        games = cache.get(key)
+        if games is not None:
+            return games
+
+        games_read = Game.objects.filter(user=self.request.user).order_by("-id")
+        cache.set(key, games_read)
+        return games_read
 
 
 class GetGame(LoginRequiredMixin, DetailView):
@@ -127,6 +137,8 @@ class GameUpdate(LoginRequiredMixin, UpdateView):
     pk_url_kwarg = "game_id"
 
     def get_queryset(self):
+        key = f"games:user:{self.request.user.pk}"
+        cache.delete(key)
         return Game.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
@@ -141,6 +153,8 @@ class GameDelete(LoginRequiredMixin, DeleteView):
     pk_url_kwarg = "game_id"
 
     def get_queryset(self):
+        key = f"games:user:{self.request.user.pk}"
+        cache.delete(key)
         return Game.objects.filter(user=self.request.user)
 
     def form_valid(self, form):

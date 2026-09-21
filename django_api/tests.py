@@ -50,7 +50,7 @@ class PrivateModelApiTests(TestCase):
         # робимо запит до API
         response = self.client.get(MODEL_URL)
         # витягуємо данні з бд тільки цього користувача, і серіалізуємо в json
-        models = Game.objects.filter(user=self.user).order_by("-name")
+        models = Game.objects.filter(user=self.user).order_by("-id")
         serializer = GameModelSerializer(
             models, many=True
         )  # бо це список, не один об'єкт

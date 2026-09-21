@@ -17,7 +17,7 @@ from pathlib import Path
 import environ
 from django.conf.global_settings import SECURE_HSTS_SECONDS, \
     SECURE_HSTS_INCLUDE_SUBDOMAINS, SECURE_HSTS_PRELOAD, SESSION_COOKIE_SECURE, \
-    SECURE_SSL_REDIRECT, LOGIN_URL, DATABASES
+    SECURE_SSL_REDIRECT, LOGIN_URL, DATABASES, CACHES
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,19 +35,19 @@ environ.Env.read_env(BASE_DIR / ".env")
 SECRET_KEY = env("SECRET_KEY", default="dev-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 LOGIN_URL = "login"
 
 ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "django-drf-1k5v.onrender.com"]
 
-SECURE_HSTS_SECONDS = 60
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+# SECURE_HSTS_SECONDS = 60
+#
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+#
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
 
 # Application definition
 
@@ -77,6 +77,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'TIMEOUT': 600,
+        'KEY_PREFIX': 'cache',
+        'OPTIONS': {
+            'db': 10,
+            'pool_class': 'redis.BlockingConnectionPool',
+        },
+    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

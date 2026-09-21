@@ -5,7 +5,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, \
+    HTTP_401_UNAUTHORIZED
 
 from django_db.models import Game
 from .serializers import UserSerializer, GameModelSerializer
@@ -24,11 +25,15 @@ def user_login(request):
         password = request.data.get("password")
 
         if username is None or password is None:
-            return Response({"error": "Invalid username or password!"})
+            return Response(
+                {"error": "Invalid username or password!"}, HTTP_400_BAD_REQUEST
+            )
 
         user = authenticate(request, username=username, password=password)
         if user is None:
-            return Response({"error": "Invalid username or password!"})
+            return Response(
+                {"error": "Invalid username or password!"}, HTTP_401_UNAUTHORIZED
+            )
 
         token, _ = Token.objects.get_or_create(user=user)
         return Response({"access token": token.key}, HTTP_200_OK)

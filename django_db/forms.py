@@ -14,8 +14,8 @@ class UserForm(UserCreationForm):
 class ClientForm(ModelForm):
     class Meta:
         model = Client
-        fields = "__all__"
-        exclude = ["user"]
+        fields = ["phone", "photo", "age", "birthday"] #замість "__all__" якщо в майбутньому добавиться службове поле
+        #exclude = ["user"]
         widgets = {"birthday": DateInput(attrs={"type": "date"})}
 
 
