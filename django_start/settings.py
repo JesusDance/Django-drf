@@ -81,7 +81,7 @@ MIDDLEWARE = [
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
+        'LOCATION': env("REDIS_URL", default="redis://127.0.0.1:6379"),
         'TIMEOUT': 600,
         'KEY_PREFIX': 'cache',
         'OPTIONS': {
@@ -151,6 +151,10 @@ WSGI_APPLICATION = 'django_start.wsgi.application'
 
 DATABASES = {
     'default': env.db(default="sqlite:///db.sqlite3")
+}
+
+DATABASES["default"]["TEST"] = {
+    "NAME": env("TEST_DATABASE_NAME", default="django_test"),
 }
 
 # Password validation
