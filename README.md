@@ -40,7 +40,7 @@ source .venv/bin/activate #Linux/Mac
 .venv/Scripts/activate    # Windows
 
 3. Install dependencies
-python install -r requirements.txt
+python -m pip install -r requirements.txt
 
 4. SSL turn off
 django_start/settings.py/SECURE_SSL_REDIRECT = False
