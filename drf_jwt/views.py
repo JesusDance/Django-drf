@@ -12,6 +12,7 @@ Core domain logic lives in django_api / django_db.
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView, Response
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
 
 from django_db.models import GameList
 from .serializers import UserRegisterSerializer, GameListSerializer
@@ -25,7 +26,9 @@ class UserRegisterView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response({"message": "User created successfully"})
+        return Response(
+            {"message": "User created successfully"}, HTTP_201_CREATED
+        )
 
 
 class ProfileView(APIView):
@@ -39,4 +42,4 @@ class ProfileView(APIView):
             "email": request.user.email,
             "games": serializer.data,
         }
-        return Response(data)
+        return Response(data, HTTP_200_OK)
