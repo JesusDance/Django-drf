@@ -2,19 +2,35 @@ from rest_framework import viewsets
 from rest_framework.authentication import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, \
     HTTP_401_UNAUTHORIZED
 
 from django_db.models import Game
-from .serializers import UserSerializer, GameModelSerializer
+from .serializers import UserSerializer, GameModelSerializer, \
+    UserUpdateSerializer
 
 
 class CreateUser(CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
+
+
+class UpdateUser(UpdateAPIView):
+    serializer_class = UserUpdateSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
+
+
+class DeleteUser(DestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
 
 
 @api_view(["POST"])
