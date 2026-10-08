@@ -17,7 +17,8 @@ from pathlib import Path
 import environ
 from django.conf.global_settings import SECURE_HSTS_SECONDS, \
     SECURE_HSTS_INCLUDE_SUBDOMAINS, SECURE_HSTS_PRELOAD, SESSION_COOKIE_SECURE, \
-    SECURE_SSL_REDIRECT, LOGIN_URL, DATABASES, CACHES
+    SECURE_SSL_REDIRECT, LOGIN_URL, DATABASES, CACHES, EMAIL_BACKEND, \
+    EMAIL_HOST, EMAIL_HOST_PASSWORD, DEFAULT_FROM_EMAIL, DEFAULT_AUTO_FIELD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -196,3 +197,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'tmp')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env.int("EMAIL_PORT", default=587)
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
+DEFAULT_FROM_EMAIL = 'default from email'
