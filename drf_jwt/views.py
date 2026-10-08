@@ -36,7 +36,7 @@ class ProfileView(APIView):
 
     def get(self, request):
         game_list = GameList.objects.filter(gamer=self.request.user)
-        serializer = GameListSerializer(game_list, many=True)
+        serializer = GameListSerializer(instance=game_list, many=True)
         data = {
             "username": request.user.username,
             "email": request.user.email,
