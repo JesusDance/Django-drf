@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from django_db.models import Game
-
+from django_start import settings
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=50)
@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.email_user(
             subject="Welcome",
             message="Your account was created",
-            from_email="jiesusdance@gmail.com",
+            from_email=settings.DEFAULT_FROM_EMAIL,
         )
         return user
 
