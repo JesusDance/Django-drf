@@ -14,11 +14,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        user.email_user(
-            subject="Welcome",
-            message="Your account was created",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-        )
+        # user.email_user(
+        #     subject="Welcome",
+        #     message="Your account was created",
+        #     from_email=settings.DEFAULT_FROM_EMAIL,
+        # )
         return user
 
 
