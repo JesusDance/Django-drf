@@ -41,4 +41,5 @@ urlpatterns = [
     path('', include('django_db.urls')),
     path('', include('django_api.urls')),
     path('', include('drf_jwt.urls')),
+    path('', include('sports.urls')),
 ]
