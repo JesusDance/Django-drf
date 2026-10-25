@@ -42,14 +42,14 @@ LOGIN_URL = "login"
 
 ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost", "django-drf-1k5v.onrender.com"]
 
-SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_SECONDS = 0
 
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
 
 # Application definition
 
@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django_db',
     'django_api',
     'drf_jwt',
+    'sports',
 ]
 
 MIDDLEWARE = [
@@ -210,3 +211,6 @@ EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL", default=False)
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 EMAIL_TIMEOUT=env.int("EMAIL_TIMEOUT")
+
+API_KEY=env("API_KEY")
+FOOTBALL_URL=env("FOOTBALL_URL")
